@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Search / will display always -->
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="Search"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:visible="false"/>
+
+    <item android:name= "android:actionMenuTextColor"
+        android:id="@+id/action_unselected"
+        android:title="Cancel"
+        app:showAsAction="always"
+        android:visible="false"
+        >@color/colorAccent</item>
+
+    <item android:name= "android:actionMenuTextColor"
+        android:id="@+id/action_selectAll"
+        android:title="All"
+        app:showAsAction="always"
+        android:visible="false"
+        >@color/colorAccent</item>
+
+    <item android:id="@+id/action_rename"
+        android:title="Rename"
+        />
+    <item android:id="@+id/action_delete"
+        android:icon="@drawable/ic_action_delete"
+        android:title="Delete"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+
+    <!-- Help -->
+    <item android:id="@+id/action_help"
+        android:icon="@drawable/ic_action_help"
+        android:title="Help"
+       app:showAsAction="never"/>
+
+    <!-- Setting -->
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
+</menu>

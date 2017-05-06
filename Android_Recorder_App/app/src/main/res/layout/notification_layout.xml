@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/btn_noti_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorBasic"
+        android:text="Running" />
+    <Button
+        android:id="@+id/btn_noti_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorBasic"
+        android:text="Pausing"
+        android:visibility="gone"
+        />
+
+
+
+    <Button
+        android:id="@+id/btn_noti_tomain"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorBasic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="App" />
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_filenamerecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fileName"
+            android:textSize="50sp"
+            android:textColor="@color/colorBasic"/>
+
+        <CheckBox
+            android:id="@+id/cb_itemSelected"
+            android:layout_gravity="center"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+           />
+        <Button
+            android:id="@+id/btn_pause_run"
+            android:layout_gravity="center"
+            android:text="Running"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorBasic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_sizereocord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size"
+        android:textSize="20sp"
+        android:textColor="@color/colorBasic"/>
+
+</LinearLayout>
