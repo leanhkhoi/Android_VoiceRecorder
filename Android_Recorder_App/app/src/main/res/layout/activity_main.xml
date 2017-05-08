@@ -98,7 +98,7 @@
             android:visibility="gone"
             />
         <Button
-            android:id="@+id/play"
+            android:id="@+id/stopnosave"
 
             android:layout_width="@dimen/action_button_min_width"
             android:layout_height="wrap_content"

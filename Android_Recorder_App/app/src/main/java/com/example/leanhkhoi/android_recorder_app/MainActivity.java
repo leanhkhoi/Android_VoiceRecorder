@@ -1,4 +1,4 @@
-package com.example.leanhkhoi.android_recorder_app;
+﻿package com.example.leanhkhoi.android_recorder_app;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity  {
 
         start = (Button)findViewById(R.id.start); //button
         stop = (Button)findViewById(R.id.stop); //button
-        stopnotsave = (Button)findViewById(R.id.play); //button
+        stopnotsave = (Button)findViewById(R.id.stopnosave); //button
         pause = (Button)findViewById(R.id.pause);   //button
         resume = (Button) findViewById(R.id.resume); //button
         etFileName = (EditText) findViewById(R.id.et_filename); //Edit text
