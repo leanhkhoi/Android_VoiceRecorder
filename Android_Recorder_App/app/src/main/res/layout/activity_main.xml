@@ -10,9 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listRecordView"
-        android:background="@color/colorPrimary"
-        android:visibility="gone"
-        android:layout_above="@+id/backtomain">
+        android:background="#263238"
+        android:visibility="gone">
         </ListView>
 
     <RelativeLayout

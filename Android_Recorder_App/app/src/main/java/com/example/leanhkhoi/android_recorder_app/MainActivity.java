@@ -1,4 +1,4 @@
-﻿package com.example.leanhkhoi.android_recorder_app;
+package com.example.leanhkhoi.android_recorder_app;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity  {
     //doi tuong de phat hoạc dung file am thanh
     private static MediaPlayer m = new MediaPlayer();
 
+    //animation visualize
+    //private AudioVisualization audioVisualization;
+   // private AudioRecordingDbmHandler handler = new AudioRecordingDbmHandler();
 
     private Thread recordingThread = null;
     private boolean isRecording = false;
@@ -148,7 +151,8 @@ public class MainActivity extends AppCompatActivity  {
         try {
             setWidgets();
 
-            //
+            //access from AudioVisualization link to handle
+           // audioVisualization.linkTo(handler);
 
             //Kiem tra thu muc va don dep rac trong thu muc
             ValidateFileBeforRun();
@@ -188,6 +192,8 @@ public class MainActivity extends AppCompatActivity  {
         //send button cho facebook
         sendButton = (SendButton)findViewById(R.id.fb_send_button);
 
+        //animation
+        //audioVisualization = (AudioVisualization) findViewById(R.id.visualizer_view);
 
 
         //setButtonTint(start,ColorStateList.valueOf(Color.GREEN)); //background tint for start button
@@ -201,9 +207,9 @@ public class MainActivity extends AppCompatActivity  {
         stop.setEnabled(false);
         stopnotsave.setEnabled(false);
         pause.setEnabled(false);
-        stop.setBackgroundColor(Color.WHITE);
-        stopnotsave.setBackgroundColor(Color.WHITE);
-        pause.setBackgroundColor(Color.WHITE);
+       // stop.setBackgroundColor(Color.WHITE);
+       // stopnotsave.setBackgroundColor(Color.WHITE);
+       // pause.setBackgroundColor(Color.WHITE);
 
     }
 
@@ -355,13 +361,13 @@ public class MainActivity extends AppCompatActivity  {
                     start.setEnabled(false);
 
                     stop.setEnabled(true);
-                    stop.setBackgroundColor(Color.YELLOW);
+                    //stop.setBackgroundColor(Color.YELLOW);
 
                     pause.setEnabled(true);
-                    pause.setBackgroundColor(Color.YELLOW);
+                    //pause.setBackgroundColor(Color.YELLOW);
 
                     stopnotsave.setEnabled(true);
-                    stopnotsave.setBackgroundColor(Color.YELLOW);
+                    //stopnotsave.setBackgroundColor(Color.YELLOW);
 
                     DisplayTimer();
 
@@ -423,6 +429,7 @@ public class MainActivity extends AppCompatActivity  {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+           // handler.onDataReceived(saudioBuffer);
         }
         try {
             os.close();
@@ -462,6 +469,7 @@ public class MainActivity extends AppCompatActivity  {
                     File f = new File(fileNames.get(i));
                     f.delete();
                 }
+                fileNames.clear();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -497,17 +505,17 @@ public class MainActivity extends AppCompatActivity  {
             Toast.makeText(this, wavfile + "is saved", Toast.LENGTH_SHORT).show();
 
             stop.setEnabled(false);
-            stop.setBackgroundColor(Color.WHITE);
+           // stop.setBackgroundColor(Color.WHITE);
 
             pause.setEnabled(false);
             pause.setVisibility(View.VISIBLE);
-            pause.setBackgroundColor(Color.WHITE);
+            //pause.setBackgroundColor(Color.WHITE);
 
             resume.setEnabled(false);
             resume.setVisibility(View.GONE);
 
             stopnotsave.setEnabled(false);
-            stopnotsave.setBackgroundColor(Color.WHITE);
+           // stopnotsave.setBackgroundColor(Color.WHITE);
 
             start.setEnabled(true);
             tS.setStop(true);
@@ -587,14 +595,14 @@ public class MainActivity extends AppCompatActivity  {
             pause.setVisibility(View.GONE);
 
             stop.setEnabled(true);
-            stop.setBackgroundColor(Color.YELLOW);
+            //stop.setBackgroundColor(Color.YELLOW);
 
             resume.setEnabled(true);
             resume.setVisibility(View.VISIBLE);
-            resume.setBackgroundColor(Color.YELLOW);
+            //resume.setBackgroundColor(Color.YELLOW);
 
             stopnotsave.setEnabled(true);
-            stopnotsave.setBackgroundColor(Color.YELLOW);
+            //stopnotsave.setBackgroundColor(Color.YELLOW);
             tS.setStop(true);
         }
     }
@@ -619,17 +627,17 @@ public class MainActivity extends AppCompatActivity  {
         }
 
         stop.setEnabled(true);
-        stop.setBackgroundColor(Color.YELLOW);
+        //stop.setBackgroundColor(Color.YELLOW);
 
         pause.setEnabled(true);
-        pause.setBackgroundColor(Color.YELLOW);
+       // pause.setBackgroundColor(Color.YELLOW);
         pause.setVisibility(View.VISIBLE);
 
         resume.setEnabled(false);
         resume.setVisibility(View.GONE);
 
         stopnotsave.setEnabled(true);
-        stopnotsave.setBackgroundColor(Color.YELLOW);
+        //stopnotsave.setBackgroundColor(Color.YELLOW);
         DisplayTimer();
 
     }
@@ -1582,5 +1590,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
     //bat su kien khi mo thanh EXPAN_STATUS_BAR
+
+
 
 }
