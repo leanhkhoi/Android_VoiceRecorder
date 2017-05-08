@@ -32,6 +32,12 @@
         app:showAsAction="always"
         android:visible="false"
         />
+    <item android:id="@+id/action_share"
+        android:icon="@drawable/ic_action_share"
+        android:title="Share"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+        />
 
     <!-- Help -->
     <item android:id="@+id/action_help"
