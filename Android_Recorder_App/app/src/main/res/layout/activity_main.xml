@@ -103,7 +103,7 @@
             android:layout_width="@dimen/action_button_min_width"
             android:layout_height="wrap_content"
             android:onClick="play"
-            android:text="@string/play"
+            android:text="Stop no Save"
             android:textColor="@color/colorTextButton"
             android:textSize="22dp"
             android:layout_alignBaseline="@+id/pause"
@@ -156,17 +156,7 @@
         android:onClick="backtomain"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/gg_drive_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Google Drive"
-        android:textColor="@color/colorTextButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="onGoogleDrive"
-        />
+
     <Button
         android:id="@+id/facebook_btn"
         android:layout_width="wrap_content"

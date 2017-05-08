@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity  {
     private boolean fileOperation = false;
 
     private String outputFile = null;
-    private Button start, stop,play, pause, resume, backtomain; //backtomain là btn khi ta dang xem danh sach mà muon quay lai man hinh chinh
+    private Button start, stop,stopnotsave, pause, resume, backtomain; //backtomain là btn khi ta dang xem danh sach mà muon quay lai man hinh chinh
     private EditText etFileName;
     private TextView timerView;
     private ListView listRecordFileView;
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity  {
 
         start = (Button)findViewById(R.id.start); //button
         stop = (Button)findViewById(R.id.stop); //button
-        play = (Button)findViewById(R.id.play); //button
+        stopnotsave = (Button)findViewById(R.id.play); //button
         pause = (Button)findViewById(R.id.pause);   //button
         resume = (Button) findViewById(R.id.resume); //button
         etFileName = (EditText) findViewById(R.id.et_filename); //Edit text
@@ -199,10 +199,10 @@ public class MainActivity extends AppCompatActivity  {
         tS.setTextView(timerView); // set text view for TimerStruct class
 
         stop.setEnabled(false);
-        play.setEnabled(false);
+        stopnotsave.setEnabled(false);
         pause.setEnabled(false);
         stop.setBackgroundColor(Color.WHITE);
-        play.setBackgroundColor(Color.WHITE);
+        stopnotsave.setBackgroundColor(Color.WHITE);
         pause.setBackgroundColor(Color.WHITE);
 
     }
@@ -328,6 +328,7 @@ public class MainActivity extends AppCompatActivity  {
                     //start.setBackgroundResource(android.R.drawable.presence_audio_online);
 
                     try {
+                        if(recorder!=null) recorder = null;
                         recorder = findAudioRecord();
                         if(recorder==null)
                         {
@@ -358,6 +359,9 @@ public class MainActivity extends AppCompatActivity  {
 
                     pause.setEnabled(true);
                     pause.setBackgroundColor(Color.YELLOW);
+
+                    stopnotsave.setEnabled(true);
+                    stopnotsave.setBackgroundColor(Color.YELLOW);
 
                     DisplayTimer();
 
@@ -427,9 +431,9 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
+    boolean notSave = false;//co luu hay khong
     public void stop (View view) {
         // stops the recording activity
-
         if (recorder != null ) {
             isRecording = false;
 
@@ -489,6 +493,9 @@ public class MainActivity extends AppCompatActivity  {
              }
              f1.delete();
 
+            if(!notSave)
+            Toast.makeText(this, wavfile + "is saved", Toast.LENGTH_SHORT).show();
+
             stop.setEnabled(false);
             stop.setBackgroundColor(Color.WHITE);
 
@@ -499,9 +506,13 @@ public class MainActivity extends AppCompatActivity  {
             resume.setEnabled(false);
             resume.setVisibility(View.GONE);
 
-            play.setEnabled(true);
-            play.setBackgroundColor(Color.YELLOW);
+            stopnotsave.setEnabled(false);
+            stopnotsave.setBackgroundColor(Color.WHITE);
+
+            start.setEnabled(true);
             tS.setStop(true);
+        tS = new TimerStruct();
+        tS.setTextView(timerView);
 
     }
     public void PlayShortAudioFileViaAudioTrack(View view) throws IOException{
@@ -543,7 +554,13 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void play(View view) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException{
-        if(m.isPlaying()){
+        notSave = true; //khong luu ghi dung
+        stop(view);
+        File f = new File(currentFileName);
+        if(f.exists()) f.delete();
+
+        notSave = false; //tra ve mac dinh la luu khi stop
+        /*if(m.isPlaying()){
             m.stop();
         }
         m = new MediaPlayer();
@@ -554,7 +571,7 @@ public class MainActivity extends AppCompatActivity  {
         m.prepare();
         m.start();
         // new File(outputFile).delete();
-        Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();*/
 
     }
     public void pause(View view) throws  IllegalArgumentException, SecurityException, IllegalStateException, IOException{
@@ -576,8 +593,8 @@ public class MainActivity extends AppCompatActivity  {
             resume.setVisibility(View.VISIBLE);
             resume.setBackgroundColor(Color.YELLOW);
 
-            play.setEnabled(false);
-            play.setBackgroundColor(Color.WHITE);
+            stopnotsave.setEnabled(true);
+            stopnotsave.setBackgroundColor(Color.YELLOW);
             tS.setStop(true);
         }
     }
@@ -611,6 +628,8 @@ public class MainActivity extends AppCompatActivity  {
         resume.setEnabled(false);
         resume.setVisibility(View.GONE);
 
+        stopnotsave.setEnabled(true);
+        stopnotsave.setBackgroundColor(Color.YELLOW);
         DisplayTimer();
 
     }
