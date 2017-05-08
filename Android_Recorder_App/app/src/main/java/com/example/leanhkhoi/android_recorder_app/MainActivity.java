@@ -21,7 +21,6 @@ import android.media.AudioTrack;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -91,16 +90,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.drive.Drive;
 
-
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+//implements GoogleApiClient.ConnectionCallbacks,
+//        GoogleApiClient.OnConnectionFailedListener
+public class MainActivity extends AppCompatActivity  {
 
     private static final int REQUEST_CODE_RESOLUTION = 1 ;
     //for facebook
     CallbackManager callbackManager;
 
     //for google drive
-    GoogleApiClient mGoogleApiClient = null;
+    private GoogleApiClient mGoogleApiClient;
     private static final String TAG = "Google Drive Activity";
+
     private boolean fileOperation = false;
 
     private String outputFile = null;
@@ -295,12 +296,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     //control file google drive
-    public void onGoogleDrive (View view){
+    /*public void onshare(View view){
+        String sharePath = Environment.getExternalStorageDirectory().getPath()
+                + "/Recorders/boemlacanbo.wav";
+        if(new File(sharePath).exists())
+        {
+            Log.d("info","Exist Exist Exist");
+        }
+        Uri uri = Uri.fromFile(new File(sharePath));
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("audio/*");
+        share.setPackage("com.android.bluetooth");
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, "Share Sound File"));
 
-    }
-
-
-
+    }*/
     //////////////////////////////////Phan nay cho chuc nang Chinh ghi am /////////////////////////////////////
     //////////////////////////////////////////////////////////////////
     //Bắt sự kiên mouse up khi muon bat dau thu am
@@ -670,6 +680,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mi.setVisible(false);
         mi = menu.findItem(R.id.action_delete);
         mi.setVisible(false);
+        mi = menu.findItem(R.id.action_share);
+        mi.setVisible(false);
         mi = menu.findItem(R.id.action_rename);
         mi.setVisible(true);
     }
@@ -727,6 +739,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return true;
             case R.id.action_settings:
 
+                return true;
+            case R.id.action_share:
+                ShareFiles();
                 return true;
             case R.id.action_delete:
                 DeleteRecordFile();
@@ -838,6 +853,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 mnitem.setVisible(true);
                 mnitem = menu.findItem(R.id.action_unselected);
                 mnitem.setVisible(true);
+                mnitem = menu.findItem(R.id.action_share);
+                mnitem.setVisible(true);
                 //((BaseAdapter) listRecordFileView.getAdapter()).notifyDataSetChanged();
                 //listRecordFileView.invalidate();*/
                 return false;
@@ -918,6 +935,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     //cap nhat du lieu o adapter
      RecordListSelectAdapter r = (RecordListSelectAdapter)listRecordFileView.getAdapter();
      r.receiveEventDeleted(getFileFromStorage());
+    }
+
+    private void ShareFiles() {
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Here are some files.");
+        intent.setType("audio/*"); /* This example is sharing jpeg images. */
+        ArrayList<Uri> files = new ArrayList<Uri>();
+        if(filesSelected.size() > 0){
+            // Log.d("info", "" + filesSelected.size());
+            for (int i = 0; i < filesSelected.size(); i++){
+                String fn = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Recorders/" + filesSelected.get(i);
+                File f = new File(fn);
+                if(f.exists()){
+                   Uri uri = Uri.fromFile(f);
+                   files.add(uri);
+                }
+            }
+        }
+        else{
+            return;
+        }
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, files);
+        startActivity(Intent.createChooser(intent, "Share Sound Files"));
+        // sau kh xoa thi clear danh sach
+        filesSelected.clear();
+
+        //cap nhat du lieu o adapter
+        RecordListSelectAdapter r = (RecordListSelectAdapter)listRecordFileView.getAdapter();
+        r.receiveEventDeleted(getFileFromStorage());
     }
 
     //doi ten file da chon
@@ -1278,8 +1326,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //neu nhân nut PAUSING thì tiêp tục phát nhạc
         @Override
         public void onReceive(Context context, Intent intent) {
-
-
             if(intent.getAction() == "Pause_Run"){
                 if(state.equals("Running")){
 
@@ -1350,7 +1396,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private final BroadcastReceiver deletereceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if(m.isPlaying()) {
                 m.stop();
 
@@ -1389,18 +1434,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
     public void onResume() {
         super.onResume();
-        if (mGoogleApiClient == null) {
+         /*if (mGoogleApiClient == null) {
 
-            /**
+           *
              * Create the API client and bind it to an instance variable.
              * We use this instance as the callback for connection and connection failures.
              * Since no account name is passed, the user is prompted to choose.
-             */
-            Scope sc = Drive.SCOPE_FILE;
 
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(Drive.API)
-                    .addScope(sc)
+                    .addScope(Drive.SCOPE_FILE)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .build();
@@ -1408,7 +1451,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         mGoogleApiClient.connect();
        // Log.d("onResume : ", timerView.getText().toString());
+       */
     }
+
+    /*
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
@@ -1418,16 +1464,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnectionSuspended(int i) {
         Log.i(TAG, "GoogleApiClient connection suspended");
     }
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.i(TAG, "GoogleApiClient connection failed: " + connectionResult.toString());
 
-        if (!connectionResult.hasResolution()) {
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
+        Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
+
+        if (!result.hasResolution()) {
 
             // show the localized error dialog.
-            GoogleApiAvailability.getInstance().getErrorDialog(this, connectionResult.getErrorCode(), 0).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this, result.getErrorCode(), 0).show();
             return;
         }
+
+
+
+        try {
+
+            result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
+
+        } catch (IntentSender.SendIntentException e) {
+
+            Log.e(TAG, "Exception while starting resolution activity", e);
+        }
+    }
+    */
 
         /**
          *  The failure has a resolution. Resolve it.
@@ -1435,15 +1495,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
          *  dialog is displayed to the user.
          */
 
-        try {
 
-            connectionResult.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
-
-        } catch (IntentSender.SendIntentException e) {
-
-            Log.e(TAG, "Exception while starting resolution activity", e);
-        }
-    }
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1451,9 +1503,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         switch (requestCode) {
             case REQUEST_CODE_RESOLUTION:
                 if (resultCode == RESULT_OK) {
-                    mGoogleApiClient.connect();
+
                 }
                 break;
+
         }
     }
 
@@ -1463,18 +1516,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
     public void onStop(){
         super.onStop();
-        if (mGoogleApiClient != null) {
 
-            // disconnect Google Android Drive API connection.
-            mGoogleApiClient.disconnect();
-        }
        Log.d("onStop : ", timerView.getText().toString());
         //neu het thu
         if(tS.getStop())
         tS.setRunInBackground(true);
+
+        /*if (mGoogleApiClient != null) {
+
+            // disconnect Google API client connection
+            mGoogleApiClient.disconnect();
+        }*/
     }
 
     public  void onDestroy(){
+        //kiem tra cac tep trong folder truoc khi ket thuc app
         ValidateFileBeforRun();
 
         if(isRegisterReceiver) {
